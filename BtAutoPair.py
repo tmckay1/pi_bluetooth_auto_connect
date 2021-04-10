@@ -6,6 +6,10 @@ import time
 import pexpect
 import subprocess
 
+class BluetoothctlError(Exception):
+    """This exception is raised, when bluetoothctl fails to start."""
+    pass
+
 class BtAutoPair:
   """Class to auto pair and trust with bluetooth."""
 
