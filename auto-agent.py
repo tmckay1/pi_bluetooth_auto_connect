@@ -127,7 +127,8 @@ def pair_error(error):
     print("Timed out. Cancelling pairing")
     device_obj.CancelPairing()
   elif err_name == "org.bluez.Error.AlreadyExists" and device_obj:
-    print("already exists")
+    pair_reply()
+    return
   else:
     print("Creating device failed: %s" % (error))
 
