@@ -28,7 +28,7 @@ class BtAutoPair:
 
   def enable_pairing(self):
     """Make device visible to scanning and enable pairing."""
-    print "pairing enabled"
+    print("pairing enabled")
     try:
       out = self.get_output("power on")
       out = self.get_output("discoverable on")
