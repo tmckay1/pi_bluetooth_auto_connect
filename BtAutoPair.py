@@ -28,7 +28,7 @@ class BtAutoPair:
     if start_failed:
         raise BluetoothctlError("Bluetoothctl failed after running " + command)
         
-    return self.child.before.split("\r\n")
+    return self.child.before.split(b"\r\n")
 
   def enable_pairing(self):
     """Make device visible to scanning and enable pairing."""
