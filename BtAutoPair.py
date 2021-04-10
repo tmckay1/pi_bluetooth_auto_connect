@@ -35,7 +35,7 @@ class BtAutoPair:
       out = self.get_output("pairable on")
       out = self.get_output("agent off", "unregistered")
 
-    except BluetoothctlError, e:
+    except BluetoothctlError as e:
       print(e)
       return None
 
@@ -45,6 +45,6 @@ class BtAutoPair:
       out = self.get_output("discoverable off")
       out = self.get_output("pairable off")
 
-    except BluetoothctlError, e:
+    except BluetoothctlError as e:
       print(e)
       return None
