@@ -126,6 +126,8 @@ def pair_error(error):
   if err_name == "org.freedesktop.DBus.Error.NoReply" and device_obj:
     print("Timed out. Cancelling pairing")
     device_obj.CancelPairing()
+  elif err_name == "org.bluez.Error.AlreadyExists" and device_obj:
+    print("already exists")
   else:
     print("Creating device failed: %s" % (error))
 
@@ -174,9 +176,9 @@ if __name__ == '__main__':
             options.adapter_pattern)
     dev_path = device.object_path
     agent.set_exit_on_release(False)
+    device_obj = device
     device.Pair(reply_handler=pair_reply, error_handler=pair_error,
                 timeout=60000)
-    device_obj = device
   else:
     manager.RequestDefaultAgent(path)
 
