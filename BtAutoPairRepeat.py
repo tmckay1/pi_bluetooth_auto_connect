@@ -39,7 +39,7 @@ class BtAutoPairRepeat:
       out = self.get_output("pairable on")
       out = self.get_output("agent off", "unregistered")
       with subprocess.Popen(["/usr/local/bin/auto-agent","C4:98:80:E0:8F:01"], shell = False) as p:
-        outs, errs = proc.communicate()
+        outs, errs = p.communicate()
         print("proc")
         print(outs)
         print("errs")
