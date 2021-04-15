@@ -10,7 +10,7 @@ class BluetoothctlError(Exception):
     """This exception is raised, when bluetoothctl fails to start."""
     pass
 
-class BtAutoPair:
+class BtAutoPairRepeat:
   """Class to auto pair and trust with bluetooth."""
 
   def __init__(self):

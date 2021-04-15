@@ -165,8 +165,6 @@ if __name__ == '__main__':
   manager = dbus.Interface(obj, "org.bluez.AgentManager1")
   manager.RegisterAgent(path, capability)
 
-  print("Agent registered")
-
   # Fix-up old style invocation (BlueZ 4)
   if len(args) > 0 and args[0].startswith("hci"):
     options.adapter_pattern = args[0]

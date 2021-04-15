@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
-import BtAutoPair
+import BtAutoPairRepeat
 
-autopair = BtAutoPair.BtAutoPair()
+autopair = BtAutoPairRepeat.BtAutoPairRepeat()
 
 autopair.enable_pairing()
