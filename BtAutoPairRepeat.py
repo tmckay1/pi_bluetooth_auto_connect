@@ -39,8 +39,11 @@ class BtAutoPairRepeat:
       out = self.get_output("pairable on")
       out = self.get_output("agent off", "unregistered")
       with subprocess.Popen(["/usr/local/bin/auto-agent","C4:98:80:E0:8F:01"], shell = False) as p:
+        outs, errs = proc.communicate()
         print("proc")
-        print(p.stdout.read())
+        print(outs)
+        print("errs")
+        print(errs)
 
     except BluetoothctlError as e:
       print("in err")
