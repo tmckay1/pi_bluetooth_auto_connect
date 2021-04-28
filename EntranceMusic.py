@@ -10,17 +10,26 @@ class BluetoothctlError(Exception):
     """This exception is raised, when bluetoothctl fails to start."""
     pass
 
-class BtAutoPairRepeat:
-  """Class to auto pair and trust with bluetooth."""
+"""Class to auto pair and trust with bluetooth."""
+class EntranceMusic:
+  # Whether or not we are connected to a device
   device_is_not_connected = True
 
-  device_mac_addresses = ["C4:98:80:E0:8F:01"]
+  # The list of MAC Addresses to try to connect to
+  device_mac_addresses = []
 
+  # A dict of MAC Addresses pointing to an MP3 to play when we connect to the address
+  device_mac_addresses_to_mp3 = {}
+
+  # The message to look for when we successfully connect to a device
   DEVICE_CONNECT_SUCCESS_MESSAGE = "dev_connect successful"
 
-  def __init__(self):
+  def __init__(self, device_mac_addresses_to_mp3):
     out = subprocess.check_output("/usr/sbin/rfkill unblock bluetooth", shell = True)
     self.child = pexpect.spawn("bluetoothctl", echo = False)
+    self.device_mac_addresses_to_mp3 = device_mac_addresses_to_mp3
+    for mac_address in device_mac_addresses_to_mp3:
+      device_mac_addresses.append(mac_address)
 
   def get_output(self,command, response = "succeeded"):
     """Run a command in bluetoothctl prompt, return output as a list of lines."""
