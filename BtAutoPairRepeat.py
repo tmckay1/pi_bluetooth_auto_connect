@@ -64,7 +64,7 @@ class BtAutoPairRepeat:
           print(outs)
           print("errs")
           print(errs)
-          if outs == None and errs = None:
+          if outs == None and errs == None:
             print("device connected")
             self.device_is_not_connected = False
 
