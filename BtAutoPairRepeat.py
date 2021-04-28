@@ -65,7 +65,8 @@ class BtAutoPairRepeat:
       for mac_address in self.device_mac_addresses:
         try:
           with subprocess.Popen(["/usr/local/bin/auto-agent",mac_address], shell = False, stdout = subprocess.PIPE) as p:
-            out = p.communicate().decode("utf-8")
+            out, errors = p.communicate()
+            out = out.decode("utf-8")
             print("Outout from /usr/local/bin/auto-agent for device: " + mac_address)
             print(out)
             if self.DEVICE_CONNECT_SUCCESS_MESSAGE in out:
