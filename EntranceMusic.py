@@ -89,6 +89,6 @@ class EntranceMusic:
           print("Error in connecting device: " + mac_address)
           print(e)
 
-  def play_music(self):
+  def play_music(self, mac_address):
     if self.music_player:
-      self.music_player.play()
+      self.music_player.play(mac_address)
