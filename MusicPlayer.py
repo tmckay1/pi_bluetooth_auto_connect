@@ -1,5 +1,5 @@
 """Class to encapsulate a player object to play music"""
-class EntranceMusic:
+class MusicPlayer:
 
   # A dict of MAC Addresses pointing to an MP3 to play when we connect to the address
   device_mac_addresses_to_mp3 = {}
