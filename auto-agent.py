@@ -32,13 +32,7 @@ def set_trusted(path):
 def dev_connect(path):
   dev = dbus.Interface(bus.get_object("org.bluez", path),
               "org.bluez.Device1")
-  try:
-    dev.Connect()
-    return True
-  except Exception as e:
-    print("error connecting to device")
-    print(e)
-    return False
+  dev.Connect()
 
 class Rejected(dbus.DBusException):
   _dbus_error_name = "org.bluez.Error.Rejected"
@@ -124,10 +118,7 @@ class Agent(dbus.service.Object):
 def pair_reply():
   print("Device paired")
   set_trusted(dev_path)
-  if dev_connect(dev_path):
-    print("device connected")
-  else:
-    print("device connection failed")
+  dev_connect(dev_path)
   mainloop.quit()
 
 def pair_error(error):
