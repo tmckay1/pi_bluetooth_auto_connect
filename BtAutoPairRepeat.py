@@ -12,9 +12,9 @@ class BluetoothctlError(Exception):
 
 class BtAutoPairRepeat:
   """Class to auto pair and trust with bluetooth."""
+  device_is_not_connected = True
 
   def __init__(self):
-    # p = subprocess.Popen(["/usr/local/bin/auto-agent","C4:98:80:E0:8F:01"], shell = False)
     out = subprocess.check_output("/usr/sbin/rfkill unblock bluetooth", shell = True)
     self.child = pexpect.spawn("bluetoothctl", echo = False)
 
@@ -38,12 +38,7 @@ class BtAutoPairRepeat:
       out = self.get_output("discoverable on")
       out = self.get_output("pairable on")
       out = self.get_output("agent off", "unregistered")
-      with subprocess.Popen(["/usr/local/bin/auto-agent","C4:98:80:E0:8F:01"], shell = False) as p:
-        outs, errs = p.communicate()
-        print("proc")
-        print(outs)
-        print("errs")
-        print(errs)
+      try_to_connect()
 
     except BluetoothctlError as e:
       print("in err")
@@ -59,3 +54,17 @@ class BtAutoPairRepeat:
     except BluetoothctlError as e:
       print(e)
       return None
+
+  def try_to_connect(self):
+    while device_is_not_connected:
+      try:
+        with subprocess.Popen(["/usr/local/bin/auto-agent","C4:98:80:E0:8F:01"], shell = False) as p:
+          outs, errs = p.communicate()
+          print("proc")
+          print(outs)
+          print("errs")
+          print(errs)
+
+      except Exception as e:
+        print("error in connecting device")
+        print(e)
