@@ -36,7 +36,7 @@ def dev_connect(path):
     dev.Connect()
     return True
   except Exception as e:
-    print("error connecting to device")
+    print("Error running dev.Connect()")
     print(e)
     return False
 
@@ -125,9 +125,9 @@ def pair_reply():
   print("Device paired")
   set_trusted(dev_path)
   if dev_connect(dev_path):
-    print("device connected")
+    print("dev_connect successful, connected to " + dev_path)
   else:
-    print("device connection failed")
+    print("dev_connect unsuccessful, failed to connect to " + dev_path)
   mainloop.quit()
 
 def pair_error(error):

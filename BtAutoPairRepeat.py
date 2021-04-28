@@ -14,6 +14,10 @@ class BtAutoPairRepeat:
   """Class to auto pair and trust with bluetooth."""
   device_is_not_connected = True
 
+  device_mac_addresses = ["C4:98:80:E0:8F:01"]
+
+  DEVICE_CONNECT_SUCCESS_MESSAGE = "dev_connect successful"
+
   def __init__(self):
     out = subprocess.check_output("/usr/sbin/rfkill unblock bluetooth", shell = True)
     self.child = pexpect.spawn("bluetoothctl", echo = False)
@@ -41,7 +45,7 @@ class BtAutoPairRepeat:
       self.try_to_connect()
 
     except BluetoothctlError as e:
-      print("in err")
+      print("Error running commands for bluetoothctl in enable_pairing")
       print(e)
       return None
 
@@ -52,22 +56,24 @@ class BtAutoPairRepeat:
       out = self.get_output("pairable off")
 
     except BluetoothctlError as e:
+      print("Error running commands for bluetoothctl in disable_pairing")
       print(e)
       return None
 
   def try_to_connect(self):
     while self.device_is_not_connected:
-      try:
-        with subprocess.Popen(["/usr/local/bin/auto-agent","C4:98:80:E0:8F:01"], shell = False, stdout = subprocess.PIPE, stderr = subprocess.PIPE) as p:
-          outs, errs = p.communicate()
-          print("proc")
-          print(outs)
-          print("errs")
-          print(errs)
-          if outs == None and errs == None:
-            print("device connected")
-            self.device_is_not_connected = False
+      for mac_address in self.device_mac_addresses:
+        try:
+          with subprocess.Popen(["/usr/local/bin/auto-agent",mac_address], shell = False, stdout = subprocess.PIPE) as p:
+            out = p.communicate().decode("utf-8")
+            print("Outout from /usr/local/bin/auto-agent for device: " + mac_address)
+            print(out)
+            if self.DEVICE_CONNECT_SUCCESS_MESSAGE in out:
+              print("Connection to " + mac_address + " successful")
+              self.device_is_not_connected = False
+            else:
+              print("Connection to " + mac_address + " failed")
 
-      except Exception as e:
-        print("error in connecting device")
-        print(e)
+        except Exception as e:
+          print("Error in connecting device: " + mac_address)
+          print(e)
