@@ -38,7 +38,7 @@ class BtAutoPairRepeat:
       out = self.get_output("discoverable on")
       out = self.get_output("pairable on")
       out = self.get_output("agent off", "unregistered")
-      try_to_connect()
+      self.try_to_connect()
 
     except BluetoothctlError as e:
       print("in err")
