@@ -1,6 +1,3 @@
-#!/usr/bin/python3
-# encoding=utf8
-
 import sys
 import time
 import pexpect
@@ -18,18 +15,21 @@ class EntranceMusic:
   # The list of MAC Addresses to try to connect to
   device_mac_addresses = []
 
-  # A dict of MAC Addresses pointing to an MP3 to play when we connect to the address
-  device_mac_addresses_to_mp3 = {}
+  # Player object used to play music
+  music_player = None
 
   # The message to look for when we successfully connect to a device
   DEVICE_CONNECT_SUCCESS_MESSAGE = "dev_connect successful"
 
-  def __init__(self, device_mac_addresses_to_mp3):
-    out = subprocess.check_output("/usr/sbin/rfkill unblock bluetooth", shell = True)
-    self.child = pexpect.spawn("bluetoothctl", echo = False)
+  def __init__(self, device_mac_addresses, music_player):
+    self.music_player = music_player
     self.device_mac_addresses_to_mp3 = device_mac_addresses_to_mp3
-    for mac_address in self.device_mac_addresses_to_mp3:
-      self.device_mac_addresses.append(mac_address)
+
+    # enable bluetooth
+    out = subprocess.check_output("/usr/sbin/rfkill unblock bluetooth", shell = True)
+
+    # create a child process to enter the bluetoothctl shell
+    self.child = pexpect.spawn("bluetoothctl", echo = False)
 
   def get_output(self,command, response = "succeeded"):
     """Run a command in bluetoothctl prompt, return output as a list of lines."""
@@ -81,9 +81,14 @@ class EntranceMusic:
             if self.DEVICE_CONNECT_SUCCESS_MESSAGE in out:
               print("Connection to " + mac_address + " successful")
               self.device_is_not_connected = False
+              self.play_music()
             else:
               print("Connection to " + mac_address + " failed")
 
         except Exception as e:
           print("Error in connecting device: " + mac_address)
           print(e)
+
+  def play_music(self):
+    if self.music_player:
+      self.music_player.play()
