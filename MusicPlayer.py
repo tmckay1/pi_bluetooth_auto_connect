@@ -7,5 +7,5 @@ class MusicPlayer:
   def __init__(self, device_mac_addresses_to_mp3):
     self.device_mac_addresses_to_mp3 = device_mac_addresses_to_mp3
 
-  def play():
-    pass
+  def play(self, mac_address):
+    print("Playing music for: " + self.device_mac_addresses_to_mp3[mac_address])

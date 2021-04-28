@@ -81,7 +81,7 @@ class EntranceMusic:
             if self.DEVICE_CONNECT_SUCCESS_MESSAGE in out:
               print("Connection to " + mac_address + " successful")
               self.device_is_not_connected = False
-              self.play_music()
+              self.play_music(mac_address)
             else:
               print("Connection to " + mac_address + " failed")
 
