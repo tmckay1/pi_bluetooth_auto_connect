@@ -28,8 +28,8 @@ class EntranceMusic:
     out = subprocess.check_output("/usr/sbin/rfkill unblock bluetooth", shell = True)
     self.child = pexpect.spawn("bluetoothctl", echo = False)
     self.device_mac_addresses_to_mp3 = device_mac_addresses_to_mp3
-    for mac_address in device_mac_addresses_to_mp3:
-      device_mac_addresses.append(mac_address)
+    for mac_address in self.device_mac_addresses_to_mp3:
+      self.device_mac_addresses.append(mac_address)
 
   def get_output(self,command, response = "succeeded"):
     """Run a command in bluetoothctl prompt, return output as a list of lines."""
