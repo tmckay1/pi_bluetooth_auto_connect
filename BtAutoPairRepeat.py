@@ -56,7 +56,7 @@ class BtAutoPairRepeat:
       return None
 
   def try_to_connect(self):
-    while device_is_not_connected:
+    while self.device_is_not_connected:
       try:
         with subprocess.Popen(["/usr/local/bin/auto-agent","C4:98:80:E0:8F:01"], shell = False) as p:
           outs, errs = p.communicate()
@@ -64,6 +64,9 @@ class BtAutoPairRepeat:
           print(outs)
           print("errs")
           print(errs)
+          if outs == None and errs = None:
+            print("device connected")
+            self.device_is_not_connected = False
 
       except Exception as e:
         print("error in connecting device")
