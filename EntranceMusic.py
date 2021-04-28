@@ -23,7 +23,7 @@ class EntranceMusic:
 
   def __init__(self, device_mac_addresses, music_player):
     self.music_player = music_player
-    self.device_mac_addresses_to_mp3 = device_mac_addresses_to_mp3
+    self.device_mac_addresses = device_mac_addresses
 
     # enable bluetooth
     out = subprocess.check_output("/usr/sbin/rfkill unblock bluetooth", shell = True)
