@@ -1,4 +1,5 @@
-### Connecting Phone to Bluetooth
+
+### Allow the Phone to Pair to the Raspberry Pi
 
 https://www.raspberrypi.org/forums/viewtopic.php?p=947185#p947185
 
@@ -24,6 +25,29 @@ sudo rfcomm watch hci0
 ```
 
 Now you can connect from the app and send text or macros. You can read it on the Pi with minicom, or in Python with PySerial or whatever serial comm software you prefer.
+
+-------------
+
+### How to Initiate Pair
+
+Command line does not work for some reason. So you need to have already paired in the UI with the device before. To do this make the pi discoverable in the menu bar in the UI, on the phone tap to connect, then accept the connection in the raspberry pi. Once this happens you can disconnect and running the auto connect script will work.
+
+------------
+
+### Copy over files
+
+Make bluezutils accessible from the system packages
+
+```
+sudo cp bluezutils.py /usr/local/lib/python3.7/dist-packages/
+```
+
+Copy over the agent to the system bin and change the perms to make it executable
+
+```
+sudo cp auto-agent.py /usr/local/bin/auto-agent
+sudo chmod 744 /usr/local/bin/auto-agent
+```
 
 -------------
 
