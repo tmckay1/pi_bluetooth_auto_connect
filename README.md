@@ -1,9 +1,13 @@
 # pi_bluetooth_auto_connect
-Automatically connect your raspberry pi to a bluetooth device when the device is near and play entrance music based on the device's mac address. This library was used from an example library given in forums. Links to that are further below. The basic architecture/design of this program is you will have a system executable `auto-agent` which you can use as a background job if you would like. That executable will try to connect to a given mac address. Based on it's success/failure it will output different messages to `stdout`.
+Automatically connect your raspberry pi to a bluetooth device when the device is near and play entrance music based on the device's mac address. This library was used from an example library given in forums. Links to that are further below. Note that some of this is exaclty copy and pasted as in the forum, and to refer to the exact author you'll need to refer to the links. I was simply trying to reuse their work and don't claim credit.
+
+The basic architecture/design of this program is you will have a system executable `auto-agent` which you can use as a background job if you would like. That executable will try to connect to a given mac address. Based on it's success/failure it will output different messages to `stdout`.
 
 The main file of this library is `EntranceMusic.py` which creates a child process to call `auto-agent` for a list of mac addresses. If we are able to successfully connect to a mac address, then play a music file that is associated with that mac address. Otherwise, go down the list again and try to connect with bluetooth. The assumption is when the person's phone is close enough to connect to the pi, entrance music will start playing for that device.
 
 It may seem a bit odd to have a file that can act as a job (`auto-agent`) instead of creating an object/class to encapsulate that logic, but I chose to keep it this way since this will give you an idea of what else you can do with bluetooth commands in python. We are only using a targeted part of this functionality, but if you are interested in building more complex applications, then this will give you and idea of what else you can do.
+
+-------------
 
 ### Allow the Phone to Pair to the Raspberry Pi
 
@@ -54,6 +58,26 @@ sudo chmod 744 /usr/local/bin/auto-agent
 ```
 
 This is only so you can run the auto-agent in the background in a job if you wanted. You can abstract out the implementation into a regular python class if you would like.
+
+-------------
+
+### Initiate Audio Player
+
+Depending on how you have your setup, you might need to do work to get the raspberry pi to output sound. We used `pygame` to play audio from the pi, but we also had to additional work to play sound. For one, we used a sound card and had the pi plugged into hdmi at the same time. We then set the default output for sound to be the sound card (instead of the headphones or hdmi) by editing `/usr/share/alsa/alsa.conf` and modifying
+
+```
+defaults.ctl.card 0
+defaults.pcm.card 0
+```
+
+to be 
+
+```
+defaults.ctl.card 2
+defaults.pcm.card 2
+```
+
+Note that the number to the right above (0/2) represents the index of the sound device to use. Since I had my pi connected to hdmi and a sound card the indeces were 0 - headphones, 1 - hdmi, 2 - sound card, which is why we used 2. Depending on your seteup you might need a different index.
 
 -------------
 
