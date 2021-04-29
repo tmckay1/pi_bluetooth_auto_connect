@@ -5,7 +5,8 @@ import MusicPlayer
 
 # A dict of MAC Addresses pointing to an MP3 to play when we connect to the address
 device_mac_addresses_to_mp3 = {
-  "C4:98:80:E0:8F:01": "/home/pi/test.mp3"
+  "C4:98:80:E0:8F:01": "ty.mp3",
+  "90:B0:ED:DF:AD:CD": "gig.mp3"
 }
 
 # The list of MAC Addresses to try to connect to
